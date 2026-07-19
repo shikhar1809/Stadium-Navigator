@@ -95,31 +95,11 @@
       <button id="btn-signout" class="btn-ghost btn" aria-label="Sign out" style="width:auto" data-i18n="sign_out">Sign out</button>
     </div>
 
-    <!-- Ticket form -->
+    <!-- Ticket Scan UI -->
     <div class="card" role="form" aria-labelledby="ticket-heading">
-      <p id="ticket-heading" class="card-title"><span class="emoji" aria-hidden="true">🎟️</span><span data-i18n="your_ticket">Your Ticket</span></p>
-
-      <div class="form-group">
-        <label for="input-section" data-i18n="section_number">Section Number</label>
-        <input
-          type="number"
-          id="input-section"
-          name="section"
-          placeholder="e.g. 120"
-          min="101" max="350"
-          inputmode="numeric"
-          autocomplete="off"
-          aria-describedby="section-error"
-          aria-required="true"
-        />
-        <div id="section-error" class="field-error" role="alert" aria-live="assertive" data-i18n="section_error">
-          Please enter a valid section number (101–149, 201–250, or 301–350).
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="select-language" data-i18n="language">Language</label>
-        <select id="select-language" name="language" aria-label="Select your preferred language">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px;">
+        <p id="ticket-heading" class="card-title mb-0" style="margin-bottom:0;"><span class="emoji" aria-hidden="true">🎟️</span><span data-i18n="your_ticket">Your Ticket</span></p>
+        <select id="select-language" name="language" aria-label="Select your preferred language" style="width: auto; padding: 6px 24px 6px 10px; font-size: 0.85rem;">
           <option value="en">English</option>
           <option value="es">Español</option>
           <option value="fr">Français</option>
@@ -130,44 +110,18 @@
         </select>
       </div>
 
-      <div class="form-group mb-0">
-        <label><span data-i18n="accessibility_needs">Accessibility Needs (optional)</span></label>
-        <div class="checkbox-group" role="group" aria-label="Accessibility options">
-          <label class="checkbox-item" for="check-mobility">
-            <input type="checkbox" id="check-mobility" name="mobility" />
-            <div class="checkbox-custom" aria-hidden="true"></div>
-            <div class="checkbox-label">
-              <strong data-i18n="mobility_title">Mobility / Wheelchair ♿</strong>
-              <span data-i18n="mobility_desc">Routes you to the nearest step-free ramp gate</span>
-            </div>
-          </label>
-          <label class="checkbox-item" for="check-vision">
-            <input type="checkbox" id="check-vision" name="vision" />
-            <div class="checkbox-custom" aria-hidden="true"></div>
-            <div class="checkbox-label">
-              <strong data-i18n="vision_title">Vision / Low Vision 👁</strong>
-              <span data-i18n="vision_desc">All updates spoken aloud via device audio</span>
-            </div>
-          </label>
-          <label class="checkbox-item" for="check-hearing">
-            <input type="checkbox" id="check-hearing" name="hearing" />
-            <div class="checkbox-custom" aria-hidden="true"></div>
-            <div class="checkbox-label">
-              <strong data-i18n="hearing_title">Hearing / Deaf 🦻</strong>
-              <span data-i18n="hearing_desc">Updates shown as large high-contrast banners</span>
-            </div>
-          </label>
-        </div>
+      <div id="scan-ui-idle" style="text-align: center; padding: 20px 0;">
+        <div style="font-size: 3rem; margin-bottom: 12px;">📱</div>
+        <p style="color: var(--text-secondary); margin-bottom: 20px;" data-i18n="scan_instruction">Ready to scan your ticket.</p>
+        <button id="btn-demo" class="btn btn-primary" type="button" aria-label="Simulate scanning a ticket">
+          Scan Ticket (Demo)
+        </button>
       </div>
-    </div>
 
-    <div class="btn-row">
-      <button id="btn-demo" class="btn btn-secondary" type="button" aria-label="Fill in a demo ticket" data-i18n="use_demo">
-        Use Demo Ticket
-      </button>
-      <button id="btn-submit-ticket" class="btn btn-primary" type="button" aria-label="Submit ticket and get gate assignment" data-i18n="find_gate">
-        Find My Gate →
-      </button>
+      <div id="scan-ui-active" class="hidden" style="text-align: center; padding: 20px 0;">
+        <div class="spinner" role="status" aria-label="Scanning"></div>
+        <p id="scan-status-text" style="color: var(--blue); font-weight: 500; font-size: 1.05rem; margin-top: 12px;">Scanning ticket...</p>
+      </div>
     </div>
 
   </section>

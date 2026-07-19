@@ -6,9 +6,9 @@
 :root {
   /* Light Mode (Default) */
   --bg-deep:     #F2F2F7;
-  --bg-card:     #FFFFFF;
-  --bg-elevated: rgba(118, 118, 128, 0.12);
-  --bg-surface:  #E5E5EA;
+  --bg-card:     rgba(255, 255, 255, 0.75);
+  --bg-elevated: rgba(118, 118, 128, 0.25);
+  --bg-surface:  rgba(255, 255, 255, 0.5);
   --border:      rgba(60, 60, 67, 0.1);
   --border-glow: rgba(52, 199, 89, 0.3);
 
@@ -40,9 +40,9 @@
   :root {
     /* Dark Mode */
     --bg-deep:     #000000;
-    --bg-card:     #1C1C1E;
-    --bg-elevated: rgba(255, 255, 255, 0.1);
-    --bg-surface:  #2C2C2E;
+    --bg-card:     rgba(28, 28, 30, 0.75);
+    --bg-elevated: rgba(255, 255, 255, 0.15);
+    --bg-surface:  rgba(44, 44, 46, 0.5);
     --border:      rgba(255, 255, 255, 0.1);
     --border-glow: rgba(48, 209, 88, 0.3);
 
@@ -62,7 +62,8 @@
 html { font-size: 15px; scroll-behavior: smooth; } /* Base font size reduced slightly */
 body {
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  background: var(--bg-deep);
+  background: var(--bg-deep) url('bg.jpg') no-repeat center center fixed;
+  background-size: cover;
   color: var(--text-primary);
   min-height: 100dvh;
   line-height: 1.4;
@@ -127,6 +128,8 @@ body {
 /* ─── Card ──────────────────────────────────────────────────────────────────── */
 .card {
   background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 16px; /* Reduced padding */
