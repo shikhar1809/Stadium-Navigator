@@ -54,7 +54,10 @@ This project is for Leo. It's for anyone who has ever felt that the world isn't 
 This repository serves as our official submission for the Hackathon/Challenge. We have ensured strict compliance with all the outlined rules and expectations to deliver a smart, dynamic assistant.
 
 ### 1. Challenge Vertical Chosen
-**Inclusive Stadium Navigation & Accessibility Assistant**
+# 🏟 Stadium Navigator
+**Generative AI-Enabled Gate & Access Assistant for FIFA World Cup 2026**
+
+> **Powered by Google Gemini (GenAI):** Stadium Navigator leverages Generative AI to provide real-time crowd management, intelligent step-free accessibility routing, and dynamic multilingual assistance. See [ARCHITECTURE.md](ARCHITECTURE.md) for full details on how GenAI solves the Hackathon Problem Statement.
 Our solution is designed around the persona of a specially-abled fan attending a massive global event (e.g., FIFA World Cup). The core logic centers on adapting the digital and physical stadium experience entirely to the user's specific accessibility needs (Mobility, Vision, Hearing).
 
 ### 2. Approach, Logic & How it Works
