@@ -1,8 +1,27 @@
 <div align="center">
   <img src="public/logo.png" alt="Stadium Navigator Logo" width="120" />
   <h1>Stadium Navigator</h1>
-  <p><strong>A personal gateway to the beautiful game, designed for everyone.</strong></p>
+  <p><strong>An inclusive, AI-powered stadium navigation assistant providing real-time match tracking, dynamic accessible routing, and live SOS integration for specially-abled fans.</strong></p>
 </div>
+
+---
+
+## 🌐 Live Demo
+
+You can experience the live application directly in your browser:
+**[Launch Stadium Navigator](https://stadium-navigator-31cda.web.app)**
+
+> **Note:** For the best experience, view this on a mobile device or use your browser's responsive design mode to simulate a mobile viewport.
+
+---
+
+## 🛠️ Technical Stack
+
+- **Frontend:** Vanilla JavaScript, HTML5, CSS3 (Zero heavy frameworks for maximum performance).
+- **Backend / Auth:** Firebase Authentication (Google Sign-In), Firebase Hosting.
+- **AI Integration:** Google Gemini API (accessed securely via Firebase HTTP Cloud Functions).
+- **Native APIs:** Web Speech API (Voice synthesis), Geolocation API (Simulated routing).
+- **Accessibility:** ARIA live regions, semantic HTML, dynamic CSS high-contrast toggles.
 
 ---
 
@@ -81,15 +100,6 @@ This is the core pillar of our application.
 - **Visually Impaired**: Integrated the native `window.speechSynthesis` API. When an update occurs, the app speaks the update aloud in the user's selected language (while intelligently stripping out emoji metadata to prevent screen readers from reading raw icon names).
 - **Mobility Impaired**: Core pathfinding logic explicitly queries for step-free routes and overrides default gates to ensure physical safety.
 - **Semantic HTML & ARIA**: Extensive use of `aria-live`, `aria-label`, and `role="alert"` tags to ensure native screen readers can parse the application flawlessly.
-
----
-
-## 🌐 Live Demo
-
-You can experience the live application directly in your browser:
-**[Launch Stadium Navigator](https://stadium-navigator-31cda.web.app)**
-
-> **Note:** For the best experience, view this on a mobile device or use your browser's responsive design mode to simulate a mobile viewport.
 
 ---
 *Created with love, for the love of the game.*
