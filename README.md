@@ -84,13 +84,12 @@ This is the core pillar of our application.
 
 ---
 
-## 🚀 Getting Started
+## 🌐 Live Demo
 
-1. Ensure Git is installed and configured on your system.
-2. Clone this repository inside your environment.
-3. Serve the `public/` directory using any local web server (e.g., `npx serve public` or VS Code Live Server).
-4. Tap **"Grant Permissions"** and then **"Continue with Google"** to experience the app.
-5. Make sure to test the **Accessibility Needs** checkboxes to see the dynamic logic in action!
+You can experience the live application directly in your browser:
+**[Launch Stadium Navigator](https://stadium-navigator-31cda.web.app)**
+
+> **Note:** For the best experience, view this on a mobile device or use your browser's responsive design mode to simulate a mobile viewport.
 
 ---
 *Created with love, for the love of the game.*
