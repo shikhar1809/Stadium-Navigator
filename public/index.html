@@ -110,6 +110,36 @@
         </select>
       </div>
 
+      <div class="form-group mb-0">
+        <label><span data-i18n="accessibility_needs">Accessibility Needs (optional)</span></label>
+        <div class="checkbox-group" role="group" aria-label="Accessibility options">
+          <label class="checkbox-item" for="check-mobility">
+            <input type="checkbox" id="check-mobility" name="mobility" />
+            <div class="checkbox-custom" aria-hidden="true"></div>
+            <div class="checkbox-label">
+              <strong data-i18n="mobility_title">Mobility / Wheelchair ♿</strong>
+              <span data-i18n="mobility_desc">Routes you to the nearest step-free ramp gate</span>
+            </div>
+          </label>
+          <label class="checkbox-item" for="check-vision">
+            <input type="checkbox" id="check-vision" name="vision" />
+            <div class="checkbox-custom" aria-hidden="true"></div>
+            <div class="checkbox-label">
+              <strong data-i18n="vision_title">Vision / Low Vision 👁</strong>
+              <span data-i18n="vision_desc">All updates spoken aloud via device audio</span>
+            </div>
+          </label>
+          <label class="checkbox-item" for="check-hearing">
+            <input type="checkbox" id="check-hearing" name="hearing" />
+            <div class="checkbox-custom" aria-hidden="true"></div>
+            <div class="checkbox-label">
+              <strong data-i18n="hearing_title">Hearing / Deaf 🦻</strong>
+              <span data-i18n="hearing_desc">Updates shown as large high-contrast banners</span>
+            </div>
+          </label>
+        </div>
+      </div>
+
       <div id="scan-ui-idle" style="text-align: center; padding: 20px 0;">
         <div style="font-size: 3rem; margin-bottom: 12px;">📱</div>
         <p style="color: var(--text-secondary); margin-bottom: 20px;" data-i18n="scan_instruction">Ready to scan your ticket.</p>

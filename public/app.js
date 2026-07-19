@@ -174,9 +174,9 @@ function triggerScanFlow() {
         setTimeout(() => {
           const demo = stadiumSeed?.demoTicket ?? { section: "120", language: "en" };
           session.section = parseInt(demo.section, 10);
-          session.mobility = true; // explicitly mock mobility to show rerouting
-          session.vision = false;
-          session.hearing = false;
+          session.mobility = $("check-mobility").checked;
+          session.vision = $("check-vision").checked;
+          session.hearing = $("check-hearing").checked;
           resolveGate();
         }, 1000);
       }, 1500);
@@ -575,6 +575,9 @@ $("btn-restart").addEventListener("click", () => {
   $("gate-override").classList.add("hidden");
   $("select-language").value = "en";
   updateUIForLanguage("en");
+  $("check-mobility").checked = false;
+  $("check-vision").checked   = false;
+  $("check-hearing").checked  = false;
 });
 
 // ═════════════════════════════════════════════════════════════════════════════
