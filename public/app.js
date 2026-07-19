@@ -52,6 +52,16 @@ let matchTimer    = null;
 let recheckTimer  = null;
 let countdownInterval = null;
 
+// ─── Haptics ──────────────────────────────────────────────────────────────────
+function triggerHaptic(type = "light") {
+  if (!("vibrate" in navigator)) return;
+  try {
+    if (type === "light") navigator.vibrate(50);
+    else if (type === "heavy") navigator.vibrate([200, 100, 200]);
+    else if (type === "sos") navigator.vibrate([500, 200, 500, 200, 500]);
+  } catch(e) {} // Ignore if blocked by browser policy
+}
+
 // ═════════════════════════════════════════════════════════════════════════════
 // BOOT — wait for Firebase module to initialise
 // ═════════════════════════════════════════════════════════════════════════════
@@ -71,6 +81,13 @@ async function boot() {
   } else {
     window.addEventListener("firebase-ready", initAuth, { once: true });
   }
+
+  // Attach light haptics to all buttons
+  document.querySelectorAll("button, .btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      if (btn.id !== "btn-match-help") triggerHaptic("light");
+    });
+  });
 }
 
 // ─── Load all mock JSON files ─────────────────────────────────────────────────
@@ -143,6 +160,7 @@ function initAuth() {
   });
 
   $("btn-match-help")?.addEventListener("click", () => {
+    triggerHaptic("sos");
     showScreen("result");
     $("result-loading").classList.remove("hidden");
     $("result-card").classList.add("hidden");
@@ -658,6 +676,9 @@ function pushA11yUpdate(message, context) {
   if (!banner || !text) return;
 
   text.textContent = message;
+  
+  // Vibrate heavily to physically notify users of an important match/a11y update
+  triggerHaptic("heavy");
 
   // ── Hearing flag: large, high-contrast banner ─────────────────────────────
   if (session.hearing) {
