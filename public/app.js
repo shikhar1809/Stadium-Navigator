@@ -1,6 +1,9 @@
+"use strict";
+
 /**
  * Stadium Navigator — app.js
- * Gate & Access Assistant · MetLife Stadium · FIFA World Cup 2026 Final
+ * Generative AI-enabled Gate & Access Assistant · MetLife Stadium
+ * Powered by Google Gemini AI for crowd management and accessibility.
  *
  * State machine: login → ticket → match → exit → result
  * Accessibility layer runs cross-cutting on every state.
@@ -57,13 +60,17 @@ let sosTimer      = null;
 let scanTimers    = []; // track nested timeouts for scanning
 
 // ─── Haptics ──────────────────────────────────────────────────────────────────
+/**
+ * Triggers physical device vibrations.
+ * @param {"light"|"heavy"|"sos"} type 
+ */
 function triggerHaptic(type = "light") {
   if (!("vibrate" in navigator)) return;
   try {
     if (type === "light") navigator.vibrate(50);
     else if (type === "heavy") navigator.vibrate([200, 100, 200]);
     else if (type === "sos") navigator.vibrate([500, 200, 500, 200, 500]);
-  } catch(e) {} // Ignore if blocked by browser policy
+  } catch(e) { console.warn("Haptics failed:", e); }
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
@@ -210,12 +217,12 @@ function showScreen(name) {
 // ═════════════════════════════════════════════════════════════════════════════
 // TICKET SCREEN
 // ═════════════════════════════════════════════════════════════════════════════
-$("select-language").addEventListener("change", (e) => {
+$("select-language")?.addEventListener("change", (e) => {
   session.language = e.target.value;
   updateUIForLanguage(session.language);
 });
 
-$("btn-demo").addEventListener("click", triggerScanFlow);
+$("btn-demo")?.addEventListener("click", triggerScanFlow);
 
 function triggerScanFlow() {
   const idleUi = $("scan-ui-idle");
@@ -286,7 +293,7 @@ function resolveGate() {
   showScreen("gate");
 }
 
-$("btn-continue-match").addEventListener("click", () => {
+$("btn-continue-match")?.addEventListener("click", () => {
   showScreen("match");
   setupMatchScreen();
   startMatchSequence();
@@ -360,7 +367,7 @@ function applyMatchStatus(step) {
   }
 }
 
-$("btn-skip-fulltime").addEventListener("click", () => {
+$("btn-skip-fulltime")?.addEventListener("click", () => {
   clearTimeout(matchTimer);
   const fullTimeStep = matchStatuses.find(s => s.status === "full_time");
   if (fullTimeStep) {
@@ -415,12 +422,12 @@ function triggerExitScreen() {
   pushA11yUpdate(msg, "exit");
 }
 
-$("btn-need-help").addEventListener("click", () => {
+$("btn-need-help")?.addEventListener("click", () => {
   showScreen("result");
   showHelpConnect();
 });
 
-$("btn-give-directions").addEventListener("click", () => {
+$("btn-give-directions")?.addEventListener("click", () => {
   showScreen("result");
   fetchDirections();
 });
@@ -651,13 +658,13 @@ function showResultCard(icon, heading, message, cardClass, source) {
 }
 
 // ─── Back / restart ───────────────────────────────────────────────────────────
-$("btn-back-exit").addEventListener("click", () => {
+$("btn-back-exit")?.addEventListener("click", () => {
   clearCountdown();
   $("recheck-block").classList.add("hidden");
   showScreen("exit");
 });
 
-$("btn-restart").addEventListener("click", () => {
+$("btn-restart")?.addEventListener("click", () => {
   clearCountdown();
   clearTimeout(matchTimer);
   clearTimeout(exitTimer);
@@ -844,4 +851,16 @@ function resetSession() {
 }
 
 // ─── Kick off ─────────────────────────────────────────────────────────────────
-boot();
+if (typeof window !== "undefined") {
+  boot();
+}
+
+// ─── Exports for Automated Jest Testing ───────────────────────────────────────
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = {
+    congestionColor,
+    localFallbackDirections,
+    localFallbackWait,
+    FLOOD_THRESHOLD,
+  };
+}
