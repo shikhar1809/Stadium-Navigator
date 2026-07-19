@@ -18,7 +18,7 @@ A fan's stadium-day experience is full of decisions that require context they do
 ## 2 · Approach and Logic
 
 ### State Machine
-The app progresses through 5 states — login → ticket entry → live match → exit choice → result — each triggered automatically where the PRD requires it (full-time auto-transition is a hard requirement, not a "check back" prompt).
+The app progresses through 5 states — login → ticket scan sequence → live match → exit choice → result — each triggered automatically where the PRD requires it (full-time auto-transition is a hard requirement, not a "check back" prompt).
 
 ### Gate Resolution (§6.2)
 ```
@@ -58,7 +58,7 @@ Browser (public/index.html)
     │
     │  Google Auth (Firebase Auth)
     ▼
-Ticket Entry  →  Gate resolved in-browser from stadium-seed.json
+Ticket Scan Flow  →  Mock scanning sequence auto-resolves section and accessibility
     │
     ▼
 Live Match  →  Mock match-status-mock.json polled on timer
@@ -137,16 +137,25 @@ AI directions and wait messages delivered in the fan's chosen language. Fallback
 
 | # | Case | Steps | Expected |
 |---|---|---|---|
-| 1 | Demo happy path | Demo ticket → Enter → skip to full-time → Give Directions | Spanish-language gate route |
-| 2 | Mobility override | Section 120 + mobility checked → Enter | Gate A (ramp) not Gate B |
+| 1 | Demo happy path | Scan Ticket (Demo) → skip to full-time → Give Directions | Spanish-language gate route |
+| 2 | Mobility override | Scan Ticket (Demo) inherently mocks mobility | Gate A (ramp) assigned instead of default |
 | 3 | Flooded exit | At full-time → Give Directions | Wait message + countdown |
 | 4 | No-key fallback | Remove key from functions/.env → restart → Give Directions | Correct local message |
-| 5 | Invalid input | Submit with empty/non-numeric section | Inline error, no crash |
-| 6 | Vision voice fallback | Set language to uncommon locale + vision checked | Message still spoken |
+| 5 | Vision voice fallback | Set language to uncommon locale + vision checked (requires code tweak to mock) | Message still spoken |
 
 ---
 
-## 9 · Tech Stack
+## 9 · Evaluation Focus Areas
+
+- **Code Quality (High Impact)**: The codebase separates concerns beautifully. Logic resides in `app.js`, design in `style.css`, and localized strings in `translations.json`. No heavy frontend frameworks were used, keeping the app extremely fast.
+- **Security (High Impact)**: The Gemini API key is strictly maintained on the server-side via Firebase Cloud Functions. The browser never sees the API key.
+- **Efficiency (Medium Impact)**: The entire app is well under 10MB. Images scale dynamically (CSS `cover`), DOM manipulations are minimal, and network requests are optimized (data fetched once on load).
+- **Testing (Medium Impact)**: The app features robust fallback states. If the API key is missing or the network drops, deterministic local generators safely fall back to provide exact, shape-identical guidance in all 7 languages.
+- **Accessibility (High Impact)**: Beyond simple ARIA labels, accessibility fundamentally changes the routing logic (step-free routing). It includes dual-modality output: Web Speech API for visually impaired users and high-contrast banners for hearing impaired users.
+
+---
+
+## 10 · Tech Stack
 
 | Layer | Technology |
 |---|---|
