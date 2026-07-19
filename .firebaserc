@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "stadium-navigator-31cda"
-  }
+  },
+  "targets": {
+    "stadium-navigator-31cda": {
+      "hosting": {
+        "app": [
+          "stadium-navigator"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
