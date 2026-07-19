@@ -5,11 +5,13 @@
  * State machine: login → ticket → match → exit → result
  * Accessibility layer runs cross-cutting on every state.
  *
- * AI calls go directly to Gemini via the browser SDK.
- * The API key is in public/config.js which is gitignored — never committed.
- * With no key, a deterministic fallback generator handles all cases (fully demoable).
+ * AI calls go through a Firebase Cloud Function — the Gemini API key
+ * lives in functions/.env on the server and never reaches the browser.
+ * With no deployed function, the local fallback generator handles all cases.
  */
-import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
+
+// ─── Cloud Function URL ─────────────────────────────────────────────────
+const API_URL = "https://us-central1-stadium-navigator-31cda.cloudfunctions.net/api";
 
 // ─── Match step timing (ms between steps for the demo) ───────────────────────
 // In a real deployment these would be real match-feed polls.
@@ -428,23 +430,27 @@ async function handleDirectionsState(gatePct) {
   let message, source;
 
   try {
-    const prompt =
-      `Fan section: ${session.section}. ` +
-      `Assigned exit: ${session.gate.label} (${session.gate.quadrant} side of MetLife Stadium). ` +
-      `Current congestion at this gate: ${gatePct}%. ` +
-      `Mobility/step-free access required: ${session.mobility ? "YES — this gate has a step-free ramp" : "NO"}. ` +
-      `Language: ${session.language}. ` +
-      `Task: Write 2–3 sentences telling the fan which gate to head to, why, and (if mobility=YES) confirm step-free ramp access. ` +
-      `Be calm and warm. State only the facts given.`;
-
-    const text = await callGemini(prompt);
-    if (text) {
-      message = text;
-      source  = "gemini";
-    } else {
-      throw new Error("no key");
-    }
+    const payload = {
+      type: "directions",
+      gate: {
+        section:    session.section,
+        label:      session.gate.label,
+        quadrant:   session.gate.quadrant,
+        congestion: gatePct,
+      },
+      language: session.language,
+      mobility: session.mobility,
+    };
+    const res  = await fetch(API_URL, {
+      method:  "POST",
+      headers: { "Content-Type": "application/json" },
+      body:    JSON.stringify(payload),
+    });
+    const data = await res.json();
+    message = data.message;
+    source  = data.source;
   } catch {
+    // Cloud Function unreachable — use local fallback
     message = localFallbackDirections(session.gate, session.mobility, session.language);
     source  = "fallback";
   }
@@ -458,20 +464,15 @@ async function handleWaitState(maxPct) {
   let message, source;
 
   try {
-    const prompt =
-      `All exit gates at MetLife Stadium are currently at high congestion. ` +
-      `Highest congestion level: ${maxPct}%. ` +
-      `Language: ${session.language}. ` +
-      `Task: Write 2–3 sentences recommending the fan wait in their seat, give a one-clause reason (crowd surge post-match), and reassure them they will be automatically notified when a gate clears. ` +
-      `Be calm and reassuring. State only the facts given.`;
-
-    const text = await callGemini(prompt);
-    if (text) {
-      message = text;
-      source  = "gemini";
-    } else {
-      throw new Error("no key");
-    }
+    const payload = { type: "wait", maxCongestion: maxPct, language: session.language };
+    const res  = await fetch(API_URL, {
+      method:  "POST",
+      headers: { "Content-Type": "application/json" },
+      body:    JSON.stringify(payload),
+    });
+    const data = await res.json();
+    message = data.message;
+    source  = data.source;
   } catch {
     message = localFallbackWait(maxPct, session.language);
     source  = "fallback";
