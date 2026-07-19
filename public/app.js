@@ -39,6 +39,7 @@ const session = {
   congestion: {},
   drainStep: 0,          // index into congestion-mock.drainSteps
   lastUpdate: "",        // last spoken/displayed message
+  runId: 0,              // track session epochs to prevent async race conditions
 };
 
 // ─── Loaded mock data ─────────────────────────────────────────────────────────
@@ -51,6 +52,9 @@ let uiTranslations = {};
 let matchTimer    = null;
 let recheckTimer  = null;
 let countdownInterval = null;
+let exitTimer     = null;
+let sosTimer      = null;
+let scanTimers    = []; // track nested timeouts for scanning
 
 // ─── Haptics ──────────────────────────────────────────────────────────────────
 function triggerHaptic(type = "light") {
@@ -162,12 +166,9 @@ function initAuth() {
   $("btn-match-help")?.addEventListener("click", () => {
     triggerHaptic("sos");
     showScreen("result");
-    $("result-loading").classList.remove("hidden");
-    $("result-card").classList.add("hidden");
-    $("recheck-block").classList.add("hidden");
-    $("btn-repeat-result").style.display = "none";
+    showResultLoading("loading_staff");
     
-    setTimeout(() => {
+    sosTimer = setTimeout(() => {
       $("result-loading").classList.add("hidden");
       $("result-card").classList.remove("hidden");
       $("result-icon").innerHTML = `<span class="material-symbols-outlined" style="font-size:inherit; color: var(--red);">support_agent</span>`;
@@ -224,26 +225,29 @@ function triggerScanFlow() {
   const dict = uiTranslations[session.language] || uiTranslations["en"];
   statusText.textContent = "Ticket scanned ✅";
   
-  setTimeout(() => {
+  scanTimers.forEach(clearTimeout);
+  scanTimers = [];
+
+  scanTimers.push(setTimeout(() => {
     statusText.textContent = "Fetching seat details...";
     
-    setTimeout(() => {
+    scanTimers.push(setTimeout(() => {
       statusText.textContent = "Mapping out accessibility needs...";
       
-      setTimeout(() => {
+      scanTimers.push(setTimeout(() => {
         statusText.textContent = "All set! ✨";
         
-        setTimeout(() => {
+        scanTimers.push(setTimeout(() => {
           const demo = stadiumSeed?.demoTicket ?? { section: "120", language: "en" };
           session.section = parseInt(demo.section, 10);
           session.mobility = $("check-mobility").checked;
           session.vision = $("check-vision").checked;
           session.hearing = $("check-hearing").checked;
           resolveGate();
-        }, 1000);
-      }, 1500);
-    }, 1500);
-  }, 1000);
+        }, 1000));
+      }, 1500));
+    }, 1500));
+  }, 1000));
 }
 
 function resolveGate() {
@@ -348,7 +352,8 @@ function applyMatchStatus(step) {
   if (step.status === "full_time") {
     clearTimeout(matchTimer);
     // §6.4: Auto-trigger exit screen — hard requirement, no user action needed
-    setTimeout(triggerExitScreen, 1200);
+    clearTimeout(exitTimer);
+    exitTimer = setTimeout(triggerExitScreen, 1200);
   }
 }
 
@@ -506,6 +511,7 @@ async function handleDirectionsState(gatePct) {
   $("recheck-block").classList.add("hidden");
 
   let message, source;
+  const currentRunId = session.runId;
 
   try {
     const payload = {
@@ -533,14 +539,17 @@ async function handleDirectionsState(gatePct) {
     source  = "fallback";
   }
 
+  // Prevent race condition if user restarted while fetching
+  if (session.runId !== currentRunId) return;
+
   const dict = uiTranslations[session.language] || uiTranslations["en"];
   showResultCard("🧭", dict.your_exit_route, message, "", source);
   pushA11yUpdate(message, "result");
 }
 
-
 async function handleWaitState(maxPct) {
   let message, source;
+  const currentRunId = session.runId;
 
   try {
     const payload = { type: "wait", maxCongestion: maxPct, language: session.language };
@@ -556,6 +565,9 @@ async function handleWaitState(maxPct) {
     message = localFallbackWait(maxPct, session.language);
     source  = "fallback";
   }
+
+  // Prevent race condition if user restarted while fetching
+  if (session.runId !== currentRunId) return;
 
   const dict = uiTranslations[session.language] || uiTranslations["en"];
   showResultCard("⏳", dict.please_wait, message, "wait-card", source);
@@ -601,6 +613,12 @@ function showResultLoading(textKey) {
   $("result-loading").classList.remove("hidden");
   $("result-card").classList.add("hidden");
   $("recheck-block").classList.add("hidden");
+  $("btn-repeat-result").style.display = "none";
+  
+  // Clear stale data
+  $("result-icon").innerHTML = "";
+  $("result-heading").textContent = "";
+  $("result-message").textContent = "";
 }
 
 function showResultCard(icon, heading, message, cardClass, source) {
@@ -639,6 +657,18 @@ $("btn-back-exit").addEventListener("click", () => {
 $("btn-restart").addEventListener("click", () => {
   clearCountdown();
   clearTimeout(matchTimer);
+  clearTimeout(exitTimer);
+  clearTimeout(sosTimer);
+  scanTimers.forEach(clearTimeout);
+  scanTimers = [];
+  
+  if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+  
+  // Hide all accessibility banners
+  document.querySelectorAll(".a11y-banner").forEach(b => {
+    b.classList.remove("visible", "hearing-banner", "ambient");
+  });
+
   resetSession();
   
   const idleUi = $("scan-ui-idle");
@@ -796,6 +826,7 @@ function updateUIForLanguage(lang) {
 }
 
 function resetSession() {
+  session.runId++;
   session.section      = null;
   session.language     = "en";
   session.mobility     = false;
