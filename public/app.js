@@ -262,9 +262,10 @@ function advanceMatchStep() {
 
 function applyMatchStatus(step) {
   session.matchStatus = step.status;
+  const lang = session.language || "en";
 
   // Update status bar
-  $("status-text").textContent   = step.label;
+  $("status-text").textContent   = step.label[lang] || step.label["en"];
   $("status-minute").textContent = step.minute !== null ? `${step.minute}'` : "—";
 
   const dot = $("status-dot");
@@ -279,7 +280,8 @@ function applyMatchStatus(step) {
   session.congestion = cData;
 
   // Push through accessibility layer
-  pushA11yUpdate(step.message, "match");
+  const msg = step.message[lang] || step.message["en"];
+  pushA11yUpdate(msg, "match");
 
   if (step.status === "full_time") {
     clearTimeout(matchTimer);

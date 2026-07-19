@@ -1,8 +1,98 @@
 [
-  { "status": "scheduled",    "label": "Pre-Match",    "minute": null, "message": "The FIFA World Cup 2026 Final is about to begin. Please find your seats." },
-  { "status": "kickoff",      "label": "Kickoff!",     "minute": 0,    "message": "Kickoff! The match has begun. Enjoy the game!" },
-  { "status": "first_half",   "label": "1st Half",     "minute": 32,   "message": "32nd minute — the match is in full flow." },
-  { "status": "half_time",    "label": "Half Time",    "minute": 45,   "message": "Half time. Concessions and facilities are available — gates remain open." },
-  { "status": "second_half",  "label": "2nd Half",     "minute": 67,   "message": "67th minute — we're in the second half. Stay in your seats." },
-  { "status": "full_time",    "label": "Full Time!",   "minute": 90,   "message": "Full time! Thank you for attending the FIFA World Cup 2026 Final. Please follow exit guidance." }
+  {
+    "status": "scheduled",
+    "minute": null,
+    "label": {
+      "en": "Pre-Match", "es": "Previa", "fr": "Avant-match", "pt": "Pré-jogo", "ar": "قبل المباراة", "de": "Vorbericht", "zh": "赛前"
+    },
+    "message": {
+      "en": "The FIFA World Cup 2026 Final is about to begin. Please find your seats.",
+      "es": "La final de la Copa Mundial de la FIFA 2026 está a punto de comenzar. Por favor, busque sus asientos.",
+      "fr": "La finale de la Coupe du Monde de la FIFA 2026 est sur le point de commencer. Veuillez rejoindre vos places.",
+      "pt": "A final da Copa do Mundo da FIFA 2026 está prestes a começar. Por favor, encontrem seus lugares.",
+      "ar": "المباراة النهائية لكأس العالم فيفا 2026 على وشك البدء. يرجى التوجه إلى مقاعدكم.",
+      "de": "Das Finale der FIFA-Weltmeisterschaft 2026 beginnt in Kürze. Bitte nehmen Sie Ihre Plätze ein.",
+      "zh": "2026年国际足联世界杯决赛即将开始。请就座。"
+    }
+  },
+  {
+    "status": "kickoff",
+    "minute": 0,
+    "label": {
+      "en": "Kickoff!", "es": "¡Saque inicial!", "fr": "Coup d'envoi!", "pt": "Pontapé de saída!", "ar": "ركلة البداية!", "de": "Anstoß!", "zh": "开球！"
+    },
+    "message": {
+      "en": "Kickoff! The match has begun. Enjoy the game!",
+      "es": "¡Saque inicial! El partido ha comenzado. ¡Disfrute del juego!",
+      "fr": "Coup d'envoi ! Le match a commencé. Bon match !",
+      "pt": "Pontapé de saída! A partida começou. Aproveite o jogo!",
+      "ar": "ركلة البداية! بدأت المباراة. استمتعوا باللعب!",
+      "de": "Anstoß! Das Spiel hat begonnen. Viel Spaß beim Spiel!",
+      "zh": "开球！比赛已经开始。尽情享受比赛吧！"
+    }
+  },
+  {
+    "status": "first_half",
+    "minute": 32,
+    "label": {
+      "en": "1st Half", "es": "1er Tiempo", "fr": "1ère mi-temps", "pt": "1º Tempo", "ar": "الشوط الأول", "de": "1. Halbzeit", "zh": "上半场"
+    },
+    "message": {
+      "en": "32nd minute — the match is in full flow.",
+      "es": "Minuto 32 — el partido está en pleno desarrollo.",
+      "fr": "32e minute — le match bat son plein.",
+      "pt": "32º minuto — a partida está em pleno andamento.",
+      "ar": "الدقيقة 32 - المباراة في أوجها.",
+      "de": "32. Minute — das Spiel ist in vollem Gange.",
+      "zh": "第32分钟——比赛正在激烈进行中。"
+    }
+  },
+  {
+    "status": "half_time",
+    "minute": 45,
+    "label": {
+      "en": "Half Time", "es": "Medio Tiempo", "fr": "Mi-temps", "pt": "Intervalo", "ar": "نهاية الشوط الأول", "de": "Halbzeit", "zh": "中场休息"
+    },
+    "message": {
+      "en": "Half time. Concessions and facilities are available — gates remain open.",
+      "es": "Medio tiempo. Los concesionarios y servicios están disponibles — las puertas permanecen abiertas.",
+      "fr": "Mi-temps. Les buvettes et les installations sont disponibles — les portes restent ouvertes.",
+      "pt": "Intervalo. Lanchonetes e banheiros estão disponíveis — os portões permanecem abertos.",
+      "ar": "نهاية الشوط الأول. المطاعم والمرافق متاحة - البوابات تظل مفتوحة.",
+      "de": "Halbzeit. Verpflegungsstände und Einrichtungen sind geöffnet — die Tore bleiben offen.",
+      "zh": "中场休息。餐饮和设施均开放——各入口保持开启。"
+    }
+  },
+  {
+    "status": "second_half",
+    "minute": 67,
+    "label": {
+      "en": "2nd Half", "es": "2do Tiempo", "fr": "2ème mi-temps", "pt": "2º Tempo", "ar": "الشوط الثاني", "de": "2. Halbzeit", "zh": "下半场"
+    },
+    "message": {
+      "en": "67th minute — we're in the second half. Stay in your seats.",
+      "es": "Minuto 67 — estamos en la segunda mitad. Quédese en sus asientos.",
+      "fr": "67e minute — nous sommes dans la deuxième mi-temps. Restez à vos places.",
+      "pt": "67º minuto — estamos no segundo tempo. Permaneçam em seus assentos.",
+      "ar": "الدقيقة 67 - نحن في الشوط الثاني. يرجى البقاء في مقاعدكم.",
+      "de": "67. Minute — wir befinden uns in der zweiten Halbzeit. Bitte bleiben Sie auf Ihren Plätzen.",
+      "zh": "第67分钟——我们正处于下半场。请就座。"
+    }
+  },
+  {
+    "status": "full_time",
+    "minute": 90,
+    "label": {
+      "en": "Full Time!", "es": "¡Final!", "fr": "Fin du match!", "pt": "Fim de Jogo!", "ar": "نهاية المباراة!", "de": "Abpfiff!", "zh": "全场结束！"
+    },
+    "message": {
+      "en": "Full time! Thank you for attending the FIFA World Cup 2026 Final. Please follow exit guidance.",
+      "es": "¡Final! Gracias por asistir a la final de la Copa Mundial de la FIFA 2026. Por favor siga las indicaciones de salida.",
+      "fr": "Fin du match ! Merci d'avoir assisté à la finale de la Coupe du Monde de la FIFA 2026. Veuillez suivre les instructions de sortie.",
+      "pt": "Fim de jogo! Obrigado por comparecer à final da Copa do Mundo da FIFA 2026. Siga as orientações de saída.",
+      "ar": "نهاية المباراة! شكراً لحضوركم المباراة النهائية لكأس العالم فيفا 2026. يرجى اتباع إرشادات الخروج.",
+      "de": "Abpfiff! Vielen Dank für Ihren Besuch beim Finale der FIFA-Weltmeisterschaft 2026. Bitte folgen Sie den Ausgangsschildern.",
+      "zh": "全场比赛结束！感谢您观看2026年国际足联世界杯决赛。请遵守退场指引。"
+    }
+  }
 ]
