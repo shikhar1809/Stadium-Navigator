@@ -200,9 +200,11 @@ function resolveGate() {
 
   if (wasOverridden) {
     $("gate-override").classList.remove("hidden");
+  } else {
+    $("gate-override").classList.add("hidden");
   }
 
-  $("gate-result").classList.remove("hidden");
+  showScreen("gate");
 }
 
 $("btn-continue-match").addEventListener("click", () => {
@@ -557,7 +559,6 @@ $("btn-restart").addEventListener("click", () => {
   clearTimeout(matchTimer);
   resetSession();
   showScreen("ticket");
-  $("gate-result").classList.add("hidden");
   $("gate-override").classList.add("hidden");
   $("input-section").value  = "";
   $("select-language").value = "en";
