@@ -20,8 +20,8 @@ You can experience the live application directly in your browser:
 - **Frontend:** Vanilla JavaScript, HTML5, CSS3 (Zero heavy frameworks for maximum performance).
 - **Backend / Auth:** Firebase Authentication (Google Sign-In), Firebase Hosting.
 - **AI Integration:** Google Gemini API (accessed securely via Firebase HTTP Cloud Functions).
-- **Native APIs:** Web Speech API (Voice synthesis), Geolocation API (Simulated routing).
-- **Accessibility:** ARIA live regions, semantic HTML, dynamic CSS high-contrast toggles.
+- **Native APIs:** Web Speech API (Voice synthesis), Geolocation API (Simulated routing), **Navigator.vibrate() (Haptic feedback)**.
+- **Accessibility:** ARIA live regions, semantic HTML, dynamic CSS high-contrast toggles, contextual device vibrations.
 
 ---
 
@@ -98,6 +98,7 @@ We have tackled the core evaluation parameters meticulously:
 This is the core pillar of our application.
 - **Hearing Impaired**: All audio match updates are duplicated as large, high-contrast visual banners that drop down onto the screen.
 - **Visually Impaired**: Integrated the native `window.speechSynthesis` API. When an update occurs, the app speaks the update aloud in the user's selected language (while intelligently stripping out emoji metadata to prevent screen readers from reading raw icon names).
+- **Deaf & Hard of Hearing**: Employs the `Navigator.vibrate()` API to emit a heavy physical haptic buzz whenever a match update occurs, instantly alerting the user to check the screen.
 - **Mobility Impaired**: Core pathfinding logic explicitly queries for step-free routes and overrides default gates to ensure physical safety.
 - **Semantic HTML & ARIA**: Extensive use of `aria-live`, `aria-label`, and `role="alert"` tags to ensure native screen readers can parse the application flawlessly.
 
