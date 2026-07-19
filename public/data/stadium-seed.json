@@ -1,0 +1,110 @@
+{
+  "stadium": {
+    "name": "MetLife Stadium",
+    "event": "FIFA World Cup 2026 Final",
+    "location": "East Rutherford, NJ",
+    "capacity": 82500
+  },
+  "gates": {
+    "gate-a": {
+      "id": "gate-a",
+      "name": "Gate A",
+      "label": "Gate A — North End Zone",
+      "quadrant": "North",
+      "ramp": true,
+      "note": "Step-free ramp access. Elevator service to all levels. Wheelchair seating adjacent."
+    },
+    "gate-b": {
+      "id": "gate-b",
+      "name": "Gate B",
+      "label": "Gate B — East Side",
+      "quadrant": "East",
+      "ramp": false,
+      "note": "Stairs and escalators only. Assistive Listening devices at East Guest Services desk."
+    },
+    "gate-c": {
+      "id": "gate-c",
+      "name": "Gate C",
+      "label": "Gate C — South End Zone",
+      "quadrant": "South",
+      "ramp": true,
+      "note": "Step-free ramp access. Elevator service to all levels. Wheelchair seating adjacent."
+    },
+    "gate-d": {
+      "id": "gate-d",
+      "name": "Gate D",
+      "label": "Gate D — West Side",
+      "quadrant": "West",
+      "ramp": false,
+      "note": "Stairs and escalators only. Assistive Listening devices at West Guest Services desk."
+    }
+  },
+  "rampGates": ["gate-a", "gate-c"],
+  "sectionToGate": {
+    "101": "gate-a", "102": "gate-a", "103": "gate-a", "104": "gate-a",
+    "105": "gate-a", "106": "gate-a", "107": "gate-a", "108": "gate-a",
+    "109": "gate-b", "110": "gate-b", "111": "gate-b", "112": "gate-b",
+    "113": "gate-b", "114": "gate-b", "115": "gate-b", "116": "gate-b",
+    "117": "gate-b", "118": "gate-b", "119": "gate-b", "120": "gate-b",
+    "121": "gate-b", "122": "gate-b", "123": "gate-b", "124": "gate-b",
+    "125": "gate-c", "126": "gate-c", "127": "gate-c", "128": "gate-c",
+    "129": "gate-c", "130": "gate-c", "131": "gate-c", "132": "gate-c",
+    "133": "gate-c", "134": "gate-c", "135": "gate-c", "136": "gate-c",
+    "137": "gate-c", "138": "gate-d", "139": "gate-d", "140": "gate-d",
+    "141": "gate-d", "142": "gate-d", "143": "gate-d", "144": "gate-d",
+    "145": "gate-d", "146": "gate-d", "147": "gate-d", "148": "gate-d",
+    "149": "gate-d",
+    "201": "gate-a", "202": "gate-a", "203": "gate-a", "204": "gate-a",
+    "205": "gate-a", "206": "gate-a", "207": "gate-a", "208": "gate-a",
+    "209": "gate-b", "210": "gate-b", "211": "gate-b", "212": "gate-b",
+    "213": "gate-b", "214": "gate-b", "215": "gate-b", "216": "gate-b",
+    "217": "gate-b", "218": "gate-b", "219": "gate-b", "220": "gate-b",
+    "221": "gate-b", "222": "gate-b", "223": "gate-b", "224": "gate-b",
+    "225": "gate-c", "226": "gate-c", "227": "gate-c", "228": "gate-c",
+    "229": "gate-c", "230": "gate-c", "231": "gate-c", "232": "gate-c",
+    "233": "gate-c", "234": "gate-c", "235": "gate-c", "236": "gate-c",
+    "237": "gate-c", "238": "gate-d", "239": "gate-d", "240": "gate-d",
+    "241": "gate-d", "242": "gate-d", "243": "gate-d", "244": "gate-d",
+    "245": "gate-d", "246": "gate-d", "247": "gate-d", "248": "gate-d",
+    "249": "gate-d", "250": "gate-d",
+    "301": "gate-a", "302": "gate-a", "303": "gate-a", "304": "gate-a",
+    "305": "gate-a", "306": "gate-a", "307": "gate-a", "308": "gate-a",
+    "309": "gate-b", "310": "gate-b", "311": "gate-b", "312": "gate-b",
+    "313": "gate-b", "314": "gate-b", "315": "gate-b", "316": "gate-b",
+    "317": "gate-b", "318": "gate-b", "319": "gate-b", "320": "gate-b",
+    "321": "gate-b", "322": "gate-b", "323": "gate-b", "324": "gate-b",
+    "325": "gate-c", "326": "gate-c", "327": "gate-c", "328": "gate-c",
+    "329": "gate-c", "330": "gate-c", "331": "gate-c", "332": "gate-c",
+    "333": "gate-c", "334": "gate-c", "335": "gate-c", "336": "gate-c",
+    "337": "gate-c", "338": "gate-d", "339": "gate-d", "340": "gate-d",
+    "341": "gate-d", "342": "gate-d", "343": "gate-d", "344": "gate-d",
+    "345": "gate-d", "346": "gate-d", "347": "gate-d", "348": "gate-d",
+    "349": "gate-d", "350": "gate-d"
+  },
+  "nearestRampGate": {
+    "note": "Quadrant approximation: sections 101-124 / 201-224 / 301-324 are nearer Gate A (North). All others nearer Gate C (South).",
+    "northSections": [
+      101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,
+      201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,
+      301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317,318,319,320,321,322,323,324
+    ],
+    "northRampGate": "gate-a",
+    "southRampGate": "gate-c"
+  },
+  "demoTicket": {
+    "section": "120",
+    "language": "es",
+    "mobility": false,
+    "vision": false,
+    "hearing": false
+  },
+  "languages": [
+    { "code": "en", "label": "English" },
+    { "code": "es", "label": "Español" },
+    { "code": "fr", "label": "Français" },
+    { "code": "pt", "label": "Português" },
+    { "code": "ar", "label": "العربية" },
+    { "code": "de", "label": "Deutsch" },
+    { "code": "zh", "label": "中文" }
+  ]
+}

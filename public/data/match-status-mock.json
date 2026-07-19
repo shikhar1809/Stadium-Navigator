@@ -1,0 +1,8 @@
+[
+  { "status": "scheduled",    "label": "Pre-Match",    "minute": null, "message": "The FIFA World Cup 2026 Final is about to begin. Please find your seats." },
+  { "status": "kickoff",      "label": "Kickoff!",     "minute": 0,    "message": "Kickoff! The match has begun. Enjoy the game!" },
+  { "status": "first_half",   "label": "1st Half",     "minute": 32,   "message": "32nd minute — the match is in full flow." },
+  { "status": "half_time",    "label": "Half Time",    "minute": 45,   "message": "Half time. Concessions and facilities are available — gates remain open." },
+  { "status": "second_half",  "label": "2nd Half",     "minute": 67,   "message": "67th minute — we're in the second half. Stay in your seats." },
+  { "status": "full_time",    "label": "Full Time!",   "minute": 90,   "message": "Full time! Thank you for attending the FIFA World Cup 2026 Final. Please follow exit guidance." }
+]

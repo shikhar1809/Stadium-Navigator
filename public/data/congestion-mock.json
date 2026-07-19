@@ -1,0 +1,17 @@
+{
+  "_note": "Congestion % per gate per match status. Starts moderate pre-match, drops during play, spikes sharply at full_time (flood threshold = 88%). Drains gradually post-match so auto-recheck loop resolves within a few cycles.",
+  "floodThreshold": 88,
+  "scheduled":   { "gate-a": 38, "gate-b": 42, "gate-c": 35, "gate-d": 40 },
+  "kickoff":     { "gate-a": 18, "gate-b": 22, "gate-c": 15, "gate-d": 20 },
+  "first_half":  { "gate-a": 8,  "gate-b": 10, "gate-c": 7,  "gate-d": 9  },
+  "half_time":   { "gate-a": 48, "gate-b": 58, "gate-c": 44, "gate-d": 52 },
+  "second_half": { "gate-a": 12, "gate-b": 14, "gate-c": 10, "gate-d": 13 },
+  "full_time":   { "gate-a": 95, "gate-b": 97, "gate-c": 93, "gate-d": 96 },
+  "drainSteps": [
+    { "gate-a": 82, "gate-b": 90, "gate-c": 79, "gate-d": 88 },
+    { "gate-a": 70, "gate-b": 80, "gate-c": 65, "gate-d": 76 },
+    { "gate-a": 55, "gate-b": 68, "gate-c": 50, "gate-d": 62 },
+    { "gate-a": 38, "gate-b": 50, "gate-c": 35, "gate-d": 44 },
+    { "gate-a": 22, "gate-b": 33, "gate-c": 19, "gate-d": 28 }
+  ]
+}
