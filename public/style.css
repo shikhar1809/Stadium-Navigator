@@ -59,10 +59,14 @@
 
 /* ─── Reset ─────────────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 15px; scroll-behavior: smooth; } /* Base font size reduced slightly */
+html { 
+  font-size: 15px; 
+  scroll-behavior: smooth; 
+  background-color: #000; /* Extra space ignored / dark */
+} 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  background: var(--bg-deep) url('bg.jpg') no-repeat center center fixed;
+  background: var(--bg-deep) url('bg.jpg') no-repeat center center;
   background-size: cover;
   color: var(--text-primary);
   min-height: 100dvh;
@@ -71,6 +75,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   transition: background-color var(--transition), color var(--transition);
+  
+  /* Strictly mobile res constraints */
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  box-shadow: 0 0 50px rgba(0,0,0,0.5); /* Separate mobile container from background */
+  position: relative;
 }
 
 /* ─── Layout ────────────────────────────────────────────────────────────────── */
