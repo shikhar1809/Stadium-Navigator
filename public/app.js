@@ -4,12 +4,12 @@
  *
  * State machine: login → ticket → match → exit → result
  * Accessibility layer runs cross-cutting on every state.
+ *
+ * AI calls go directly to Gemini via the browser SDK.
+ * The API key is in public/config.js which is gitignored — never committed.
+ * With no key, a deterministic fallback generator handles all cases (fully demoable).
  */
-
-// ─── Cloud Function URL ───────────────────────────────────────────────────────
-// Swap to emulator URL during local development:
-// const API_URL = "http://127.0.0.1:5001/stadium-navigator-31cda/us-central1/api";
-const API_URL = "https://us-central1-stadium-navigator-31cda.cloudfunctions.net/api";
+import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
 
 // ─── Match step timing (ms between steps for the demo) ───────────────────────
 // In a real deployment these would be real match-feed polls.
@@ -370,6 +370,27 @@ function showHelpConnect() {
 }
 
 // ─── Directions flow — §6.6 ──────────────────────────────────────────────────
+// ─── Gemini client (lazy-initialised) ────────────────────────────────────────────
+function getGeminiModel() {
+  const apiKey = window.STADIUM_CONFIG?.GEMINI_API_KEY;
+  if (!apiKey) return null; // no key — fallback path
+  const genAI = new GoogleGenerativeAI(apiKey);
+  return genAI.getGenerativeModel({
+    model: "gemini-2.5-flash",
+    systemInstruction:
+      "You are a calm, warm, and concise stadium navigation assistant for the FIFA World Cup 2026 Final at MetLife Stadium. " +
+      "You give short, factual, reassuring guidance — never more than 3 sentences. " +
+      "Never invent facts not provided in the prompt. " +
+      "Respond ONLY in the language specified. Do not add any preamble or sign-off.",
+  });
+}
+
+async function callGemini(prompt) {
+  const model = getGeminiModel();
+  if (!model) return null; // triggers fallback in callers
+  const result = await model.generateContent(prompt);
+  return result.response.text().trim();
+}
 async function fetchDirections() {
   showResultLoading("Getting your personalised exit directions…");
 
@@ -407,28 +428,23 @@ async function handleDirectionsState(gatePct) {
   let message, source;
 
   try {
-    const payload = {
-      type: "directions",
-      gate: {
-        section:   session.section,
-        label:     session.gate.label,
-        quadrant:  session.gate.quadrant,
-        congestion: gatePct,
-      },
-      language: session.language,
-      mobility: session.mobility,
-    };
+    const prompt =
+      `Fan section: ${session.section}. ` +
+      `Assigned exit: ${session.gate.label} (${session.gate.quadrant} side of MetLife Stadium). ` +
+      `Current congestion at this gate: ${gatePct}%. ` +
+      `Mobility/step-free access required: ${session.mobility ? "YES — this gate has a step-free ramp" : "NO"}. ` +
+      `Language: ${session.language}. ` +
+      `Task: Write 2–3 sentences telling the fan which gate to head to, why, and (if mobility=YES) confirm step-free ramp access. ` +
+      `Be calm and warm. State only the facts given.`;
 
-    const res  = await fetch(API_URL, {
-      method:  "POST",
-      headers: { "Content-Type": "application/json" },
-      body:    JSON.stringify(payload),
-    });
-    const data = await res.json();
-    message = data.message;
-    source  = data.source;
+    const text = await callGemini(prompt);
+    if (text) {
+      message = text;
+      source  = "gemini";
+    } else {
+      throw new Error("no key");
+    }
   } catch {
-    // Network fallback — deterministic local generator
     message = localFallbackDirections(session.gate, session.mobility, session.language);
     source  = "fallback";
   }
@@ -437,19 +453,25 @@ async function handleDirectionsState(gatePct) {
   pushA11yUpdate(message, "result");
 }
 
+
 async function handleWaitState(maxPct) {
   let message, source;
 
   try {
-    const payload = { type: "wait", maxCongestion: maxPct, language: session.language };
-    const res  = await fetch(API_URL, {
-      method:  "POST",
-      headers: { "Content-Type": "application/json" },
-      body:    JSON.stringify(payload),
-    });
-    const data = await res.json();
-    message = data.message;
-    source  = data.source;
+    const prompt =
+      `All exit gates at MetLife Stadium are currently at high congestion. ` +
+      `Highest congestion level: ${maxPct}%. ` +
+      `Language: ${session.language}. ` +
+      `Task: Write 2–3 sentences recommending the fan wait in their seat, give a one-clause reason (crowd surge post-match), and reassure them they will be automatically notified when a gate clears. ` +
+      `Be calm and reassuring. State only the facts given.`;
+
+    const text = await callGemini(prompt);
+    if (text) {
+      message = text;
+      source  = "gemini";
+    } else {
+      throw new Error("no key");
+    }
   } catch {
     message = localFallbackWait(maxPct, session.language);
     source  = "fallback";
