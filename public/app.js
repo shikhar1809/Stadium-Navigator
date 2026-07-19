@@ -698,7 +698,10 @@ function speakMessage(text, lang) {
   if (!("speechSynthesis" in window)) return; // §8: silent no-op if unsupported
   window.speechSynthesis.cancel();
 
-  const utter  = new SpeechSynthesisUtterance(text);
+  // Strip emojis to prevent screen reader from reading emoji descriptions aloud
+  const cleanText = text.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, '');
+  
+  const utter  = new SpeechSynthesisUtterance(cleanText);
   const bcp47  = LANG_CODES[lang] ?? "en-US";
   const voices = window.speechSynthesis.getVoices();
   const voice  = voices.find(v => v.lang.startsWith(bcp47.split("-")[0]));
