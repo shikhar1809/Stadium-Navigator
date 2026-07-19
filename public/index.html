@@ -92,15 +92,15 @@
         <img id="user-photo" src="" alt="" width="22" height="22" />
         <span id="user-name">—</span>
       </div>
-      <button id="btn-signout" class="btn-ghost btn" aria-label="Sign out" style="width:auto">Sign out</button>
+      <button id="btn-signout" class="btn-ghost btn" aria-label="Sign out" style="width:auto" data-i18n="sign_out">Sign out</button>
     </div>
 
     <!-- Ticket form -->
     <div class="card" role="form" aria-labelledby="ticket-heading">
-      <p id="ticket-heading" class="card-title"><span class="emoji" aria-hidden="true">🎟️</span>Your Ticket</p>
+      <p id="ticket-heading" class="card-title"><span class="emoji" aria-hidden="true">🎟️</span><span data-i18n="your_ticket">Your Ticket</span></p>
 
       <div class="form-group">
-        <label for="input-section">Section Number</label>
+        <label for="input-section" data-i18n="section_number">Section Number</label>
         <input
           type="number"
           id="input-section"
@@ -112,13 +112,13 @@
           aria-describedby="section-error"
           aria-required="true"
         />
-        <div id="section-error" class="field-error" role="alert" aria-live="assertive">
+        <div id="section-error" class="field-error" role="alert" aria-live="assertive" data-i18n="section_error">
           Please enter a valid section number (101–149, 201–250, or 301–350).
         </div>
       </div>
 
       <div class="form-group">
-        <label for="select-language">Language</label>
+        <label for="select-language" data-i18n="language">Language</label>
         <select id="select-language" name="language" aria-label="Select your preferred language">
           <option value="en">English</option>
           <option value="es">Español</option>
@@ -131,30 +131,30 @@
       </div>
 
       <div class="form-group mb-0">
-        <label>Accessibility Needs <span class="text-muted">(optional)</span></label>
+        <label><span data-i18n="accessibility_needs">Accessibility Needs (optional)</span></label>
         <div class="checkbox-group" role="group" aria-label="Accessibility options">
           <label class="checkbox-item" for="check-mobility">
             <input type="checkbox" id="check-mobility" name="mobility" />
             <div class="checkbox-custom" aria-hidden="true"></div>
             <div class="checkbox-label">
-              <strong>Mobility / Wheelchair ♿</strong>
-              <span>Routes you to the nearest step-free ramp gate</span>
+              <strong data-i18n="mobility_title">Mobility / Wheelchair ♿</strong>
+              <span data-i18n="mobility_desc">Routes you to the nearest step-free ramp gate</span>
             </div>
           </label>
           <label class="checkbox-item" for="check-vision">
             <input type="checkbox" id="check-vision" name="vision" />
             <div class="checkbox-custom" aria-hidden="true"></div>
             <div class="checkbox-label">
-              <strong>Vision / Low Vision 👁</strong>
-              <span>All updates spoken aloud via device audio</span>
+              <strong data-i18n="vision_title">Vision / Low Vision 👁</strong>
+              <span data-i18n="vision_desc">All updates spoken aloud via device audio</span>
             </div>
           </label>
           <label class="checkbox-item" for="check-hearing">
             <input type="checkbox" id="check-hearing" name="hearing" />
             <div class="checkbox-custom" aria-hidden="true"></div>
             <div class="checkbox-label">
-              <strong>Hearing / Deaf 🦻</strong>
-              <span>Updates shown as large high-contrast banners</span>
+              <strong data-i18n="hearing_title">Hearing / Deaf 🦻</strong>
+              <span data-i18n="hearing_desc">Updates shown as large high-contrast banners</span>
             </div>
           </label>
         </div>
@@ -162,10 +162,10 @@
     </div>
 
     <div class="btn-row">
-      <button id="btn-demo" class="btn btn-secondary" type="button" aria-label="Fill in a demo ticket">
+      <button id="btn-demo" class="btn btn-secondary" type="button" aria-label="Fill in a demo ticket" data-i18n="use_demo">
         Use Demo Ticket
       </button>
-      <button id="btn-submit-ticket" class="btn btn-primary" type="button" aria-label="Submit ticket and get gate assignment">
+      <button id="btn-submit-ticket" class="btn btn-primary" type="button" aria-label="Submit ticket and get gate assignment" data-i18n="find_gate">
         Find My Gate →
       </button>
     </div>
@@ -177,14 +177,14 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section id="screen-gate" class="screen" aria-labelledby="gate-heading">
     <div class="card" aria-labelledby="gate-heading">
-      <p id="gate-heading" class="card-title"><span class="emoji" aria-hidden="true">📍</span>Your Assigned Gate</p>
+      <p id="gate-heading" class="card-title"><span class="emoji" aria-hidden="true">📍</span><span data-i18n="assigned_gate">Your Assigned Gate</span></p>
       
       <div class="gate-badge" style="margin-top:0" role="region" aria-labelledby="gate-name">
         <div class="gate-icon" aria-hidden="true">🚪</div>
         <div>
           <div id="gate-name" class="gate-name"></div>
           <div id="gate-note" class="gate-note"></div>
-          <div id="gate-override" class="gate-override hidden" aria-live="polite">
+          <div id="gate-override" class="gate-override hidden" aria-live="polite" data-i18n="rerouted">
             ♿ Rerouted to step-free gate
           </div>
         </div>
@@ -192,7 +192,7 @@
     </div>
     
     <div class="btn-row">
-      <button id="btn-continue-match" class="btn btn-primary" aria-label="Proceed to live match view">
+      <button id="btn-continue-match" class="btn btn-primary" aria-label="Proceed to live match view" data-i18n="watch_match">
         Watch Match Updates →
       </button>
     </div>
@@ -207,11 +207,11 @@
     <div class="match-status-bar" role="status" aria-label="Live match status" aria-live="polite">
       <div id="status-dot" class="status-dot" aria-hidden="true"></div>
       <div>
-        <div class="status-label">Match Status</div>
+        <div class="status-label" data-i18n="match_status">Match Status</div>
         <div id="status-text" class="status-text">Loading…</div>
       </div>
       <div style="margin-left:auto;text-align:right;">
-        <div class="status-label">Minute</div>
+        <div class="status-label" data-i18n="minute">Minute</div>
         <div id="status-minute" class="status-text text-green">—</div>
       </div>
     </div>
@@ -220,12 +220,12 @@
     <div id="a11y-match-banner" class="a11y-banner ambient" role="alert" aria-live="assertive">
       <span class="a11y-banner-icon" aria-hidden="true">📢</span>
       <span id="a11y-match-text"></span>
-      <button id="btn-repeat-match" class="a11y-repeat-btn" aria-label="Repeat last update" style="display:none">Repeat</button>
+      <button id="btn-repeat-match" class="a11y-repeat-btn" aria-label="Repeat last update" style="display:none" data-i18n="repeat">Repeat</button>
     </div>
 
     <!-- Your gate info -->
     <div class="card" aria-labelledby="your-gate-heading">
-      <p id="your-gate-heading" class="card-title"><span class="emoji" aria-hidden="true">📍</span>Your Gate</p>
+      <p id="your-gate-heading" class="card-title"><span class="emoji" aria-hidden="true">📍</span><span data-i18n="your_gate">Your Gate</span></p>
       <div id="match-gate-display" class="gate-badge" style="margin-top:0">
         <div class="gate-icon" aria-hidden="true">🚪</div>
         <div>
@@ -237,7 +237,7 @@
 
     <!-- Live congestion -->
     <div class="card" aria-labelledby="congestion-heading">
-      <p id="congestion-heading" class="card-title"><span class="emoji" aria-hidden="true">📊</span>Live Gate Congestion</p>
+      <p id="congestion-heading" class="card-title"><span class="emoji" aria-hidden="true">📊</span><span data-i18n="live_congestion">Live Gate Congestion</span></p>
       <div class="congestion-grid" id="congestion-grid" role="list" aria-label="Gate congestion levels">
         <!-- Filled dynamically -->
       </div>
@@ -245,7 +245,7 @@
 
     <!-- Skip to full-time (for judging/testing) -->
     <div class="skip-btn-row">
-      <button id="btn-skip-fulltime" class="btn btn-ghost" aria-label="Skip match to full time (demo only)">
+      <button id="btn-skip-fulltime" class="btn btn-ghost" aria-label="Skip match to full time (demo only)" data-i18n="skip_fulltime">
         ⏭ Skip to Full Time
       </button>
     </div>
@@ -258,30 +258,30 @@
   <section id="screen-exit" class="screen" aria-labelledby="exit-heading">
     <div class="exit-hero" role="banner">
       <div style="font-size:2.4rem;margin-bottom:10px" aria-hidden="true">🏁</div>
-      <h2 id="exit-heading">Full Time!</h2>
-      <p>The match is over. How can we help you get home?</p>
+      <h2 id="exit-heading" data-i18n="full_time_title">Full Time!</h2>
+      <p data-i18n="full_time_desc">The match is over. How can we help you get home?</p>
     </div>
 
     <!-- Accessibility banner for exit screen -->
     <div id="a11y-exit-banner" class="a11y-banner ambient" role="alert" aria-live="assertive">
       <span class="a11y-banner-icon" aria-hidden="true">📢</span>
       <span id="a11y-exit-text"></span>
-      <button id="btn-repeat-exit" class="a11y-repeat-btn" aria-label="Repeat last update" style="display:none">Repeat</button>
+      <button id="btn-repeat-exit" class="a11y-repeat-btn" aria-label="Repeat last update" style="display:none" data-i18n="repeat">Repeat</button>
     </div>
 
     <div class="exit-choices" role="list">
       <button id="btn-need-help" class="exit-choice-btn" role="listitem" aria-label="I need assistance — connect me to stadium staff">
         <span class="choice-icon" aria-hidden="true">🤝</span>
         <div>
-          <div class="choice-title">Need Help?</div>
-          <div class="choice-desc">Connect with stadium staff for assistance</div>
+          <div class="choice-title" data-i18n="need_help">Need Help?</div>
+          <div class="choice-desc" data-i18n="need_help_desc">Connect with stadium staff for assistance</div>
         </div>
       </button>
       <button id="btn-give-directions" class="exit-choice-btn" role="listitem" aria-label="Give me exit directions using AI">
         <span class="choice-icon" aria-hidden="true">🧭</span>
         <div>
-          <div class="choice-title">Give Me Directions</div>
-          <div class="choice-desc">AI-powered personalised exit route</div>
+          <div class="choice-title" data-i18n="give_directions">Give Me Directions</div>
+          <div class="choice-desc" data-i18n="give_directions_desc">AI-powered personalised exit route</div>
         </div>
       </button>
     </div>
@@ -294,7 +294,7 @@
 
     <div id="result-loading" class="loading-state hidden" aria-live="polite" aria-label="Loading directions">
       <div class="spinner" role="status" aria-label="Loading"></div>
-      <p>Getting your directions…</p>
+      <p data-i18n="loading_directions">Getting your directions…</p>
     </div>
 
     <!-- Directions / Wait / Help card -->
@@ -308,7 +308,7 @@
     <!-- Recheck countdown (shown during "wait" state) -->
     <div id="recheck-block" class="hidden" aria-live="polite">
       <div class="recheck-countdown" role="timer" aria-label="Time until next gate check">
-        <span class="countdown-label">Rechecking gates in</span>
+        <span class="countdown-label" data-i18n="rechecking">Rechecking gates in</span>
         <span id="countdown-display" class="countdown-timer" aria-live="polite" aria-atomic="true">0:60</span>
       </div>
     </div>
@@ -317,14 +317,14 @@
     <div id="a11y-result-banner" class="a11y-banner ambient" role="alert" aria-live="assertive">
       <span class="a11y-banner-icon" aria-hidden="true">📢</span>
       <span id="a11y-result-text"></span>
-      <button id="btn-repeat-result" class="a11y-repeat-btn" aria-label="Repeat last update" style="display:none">Repeat</button>
+      <button id="btn-repeat-result" class="a11y-repeat-btn" aria-label="Repeat last update" style="display:none" data-i18n="repeat">Repeat</button>
     </div>
 
     <div class="btn-row" style="margin-top:4px">
-      <button id="btn-back-exit" class="btn btn-secondary" aria-label="Go back to exit options">
+      <button id="btn-back-exit" class="btn btn-secondary" aria-label="Go back to exit options" data-i18n="back">
         ← Back
       </button>
-      <button id="btn-restart" class="btn btn-ghost" aria-label="Start over with a new ticket" style="width:auto">
+      <button id="btn-restart" class="btn btn-ghost" aria-label="Start over with a new ticket" style="width:auto" data-i18n="new_ticket">
         New Ticket
       </button>
     </div>

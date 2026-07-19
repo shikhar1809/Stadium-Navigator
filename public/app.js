@@ -45,6 +45,7 @@ const session = {
 let stadiumSeed   = null;
 let matchStatuses = null;
 let congestionMap = null;
+let uiTranslations = {};
 
 // ─── Timers ───────────────────────────────────────────────────────────────────
 let matchTimer    = null;
@@ -56,6 +57,7 @@ let countdownInterval = null;
 // ═════════════════════════════════════════════════════════════════════════════
 async function boot() {
   await loadMockData();
+  updateUIForLanguage(session.language);
 
   // Wait for Firebase to expose auth
   if (window._firebaseAuth) {
@@ -72,10 +74,12 @@ async function loadMockData() {
       fetch("data/stadium-seed.json").then(r => r.json()),
       fetch("data/match-status-mock.json").then(r => r.json()),
       fetch("data/congestion-mock.json").then(r => r.json()),
+      fetch("data/translations.json").then(r => r.json()),
     ]);
     stadiumSeed   = seed;
     matchStatuses = statuses;
     congestionMap = congestion;
+    uiTranslations = translations;
     FLOOD_THRESHOLD = congestion.floodThreshold ?? 88;
   } catch (err) {
     console.error("Failed to load mock data:", err);
@@ -151,6 +155,11 @@ $("btn-demo").addEventListener("click", () => {
 });
 
 $("btn-submit-ticket").addEventListener("click", submitTicket);
+
+$("select-language").addEventListener("change", (e) => {
+  session.language = e.target.value;
+  updateUIForLanguage(session.language);
+});
 $("input-section").addEventListener("keydown", (e) => { if (e.key === "Enter") submitTicket(); });
 
 function submitTicket() {
@@ -356,17 +365,18 @@ $("btn-give-directions").addEventListener("click", () => {
 
 // ─── Staff connect — §6.5 ────────────────────────────────────────────────────
 function showHelpConnect() {
-  showResultLoading("Connecting to stadium staff…");
+  showResultLoading("loading_staff");
 
   setTimeout(() => {
+    const dict = uiTranslations[session.language] || uiTranslations["en"];
     const escortNote = session.mobility
-      ? ` Mobility escort requested — please bring a wheelchair or companion to ${session.gate.label}.`
+      ? dict.staff_escort.replace("${gate}", session.gate.label)
       : "";
-    const msg = `✅ Connected! Staff near ${session.gate.label} have been notified.${escortNote}`;
+    const msg = dict.staff_success.replace("${gate}", session.gate.label).replace("${escort}", escortNote);
 
     showResultCard(
       "🤝",
-      "Staff Notified",
+      dict.staff_notified,
       msg,
       "help-card",
       null
@@ -398,7 +408,7 @@ async function callGemini(prompt) {
   return result.response.text().trim();
 }
 async function fetchDirections() {
-  showResultLoading("Getting your personalised exit directions…");
+  showResultLoading("loading_directions");
 
   // Drain congestion step by step after full-time
   const currentCongestion = getCurrentCongestion();
@@ -459,7 +469,8 @@ async function handleDirectionsState(gatePct) {
     source  = "fallback";
   }
 
-  showResultCard("🧭", "Your Exit Route", message, "", source);
+  const dict = uiTranslations[session.language] || uiTranslations["en"];
+  showResultCard("🧭", dict.your_exit_route, message, "", source);
   pushA11yUpdate(message, "result");
 }
 
@@ -482,7 +493,8 @@ async function handleWaitState(maxPct) {
     source  = "fallback";
   }
 
-  showResultCard("⏳", "Please Wait", message, "wait-card", source);
+  const dict = uiTranslations[session.language] || uiTranslations["en"];
+  showResultCard("⏳", dict.please_wait, message, "wait-card", source);
   pushA11yUpdate(message, "result");
 
   // §6.6: Show countdown + auto-recheck every 60 seconds
@@ -519,8 +531,9 @@ function formatCountdown(secs) {
 }
 
 // ─── Result card rendering ────────────────────────────────────────────────────
-function showResultLoading(text) {
-  $("result-loading").querySelector("p").textContent = text;
+function showResultLoading(textKey) {
+  const dict = uiTranslations[session.language] || uiTranslations["en"];
+  $("result-loading").querySelector("p").textContent = dict ? dict[textKey] : textKey;
   $("result-loading").classList.remove("hidden");
   $("result-card").classList.add("hidden");
   $("recheck-block").classList.add("hidden");
@@ -539,11 +552,12 @@ function showResultCard(icon, heading, message, cardClass, source) {
     const src = $("result-source");
     src.classList.remove("hidden", "fallback");
     if (source === "fallback") src.classList.add("fallback");
+    const dict = uiTranslations[session.language] || uiTranslations["en"];
     src.textContent = source === "gemini"
-      ? "Powered by Gemini 2.5 Flash"
+      ? dict.src_gemini
       : source === "fallback"
-        ? "Local fallback (no API key)"
-        : "Staff notification system";
+        ? dict.src_fallback
+        : dict.src_staff;
   }
 
   card.classList.remove("hidden");
@@ -564,6 +578,7 @@ $("btn-restart").addEventListener("click", () => {
   $("gate-override").classList.add("hidden");
   $("input-section").value  = "";
   $("select-language").value = "en";
+  updateUIForLanguage("en");
   $("check-mobility").checked = false;
   $("check-vision").checked   = false;
   $("check-hearing").checked  = false;
@@ -692,6 +707,16 @@ function localFallbackWait(maxPct, language) {
 // HELPERS
 // ═════════════════════════════════════════════════════════════════════════════
 function $(id) { return document.getElementById(id); }
+
+function updateUIForLanguage(lang) {
+  const dict = uiTranslations[lang] || uiTranslations["en"];
+  if (!dict) return;
+
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    if (dict[key]) el.textContent = dict[key];
+  });
+}
 
 function resetSession() {
   session.section      = null;
