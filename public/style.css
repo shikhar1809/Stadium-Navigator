@@ -64,6 +64,10 @@ html {
   scroll-behavior: smooth; 
   background-color: #000; /* Extra space ignored / dark */
 } 
+.material-symbols-outlined {
+  vertical-align: middle;
+  line-height: 1;
+}
 body {
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background: var(--bg-deep) url('bg.jpg') no-repeat center center;
@@ -610,6 +614,33 @@ input.error { box-shadow: 0 0 0 2px var(--red); }
 .mt-16 { margin-top: 16px; }
 .mb-0  { margin-bottom: 0 !important; }
 .hidden { display: none !important; }
+
+/* ─── Floating Action Button (Help) ─────────────────────────────────────────── */
+.fab-help {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: var(--red);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 12px rgba(229, 57, 53, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1000;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.fab-help:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 6px rgba(229, 57, 53, 0.3);
+}
+.fab-help .material-symbols-outlined {
+  font-size: 28px;
+}
 
 /* ─── Responsive ─────────────────────────────────────────────────────────────── */
 @media (max-width: 380px) {

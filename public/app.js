@@ -103,8 +103,27 @@ function initAuth() {
       session.user = user;
       showPostLoginUI(user);
     } else {
-      showScreen("login");
+      if (!sessionStorage.getItem("permsGranted")) {
+        showScreen("permissions");
+      } else {
+        showScreen("login");
+      }
     }
+  });
+
+  $("btn-grant-permissions")?.addEventListener("click", async () => {
+    // Trigger real browser prompts for demo realism
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({video: true});
+      stream.getTracks().forEach(t => t.stop());
+    } catch(e) { console.warn("Camera permission denied/failed", e); }
+    
+    try {
+      await new Promise((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject));
+    } catch(e) { console.warn("Location permission denied/failed", e); }
+    
+    sessionStorage.setItem("permsGranted", "1");
+    showScreen("login");
   });
 
   $("btn-google-signin").addEventListener("click", async () => {
@@ -121,6 +140,25 @@ function initAuth() {
     window._signOut(auth);
     resetSession();
     showScreen("login");
+  });
+
+  $("btn-match-help")?.addEventListener("click", () => {
+    showScreen("result");
+    $("result-loading").classList.remove("hidden");
+    $("result-card").classList.add("hidden");
+    $("recheck-block").classList.add("hidden");
+    $("btn-repeat-result").style.display = "none";
+    
+    setTimeout(() => {
+      $("result-loading").classList.add("hidden");
+      $("result-card").classList.remove("hidden");
+      $("result-icon").innerHTML = `<span class="material-symbols-outlined" style="font-size:inherit; color: var(--red);">support_agent</span>`;
+      $("result-heading").textContent = "Assistance Requested";
+      $("result-heading").style.color = "var(--red)";
+      $("result-message").textContent = "Staff is notified, please remain at your position, assistance is on the way.";
+      $("result-message").style.color = "var(--text-primary)";
+      playA11yAlert("Staff is notified, please remain at your position, assistance is on the way.", "result");
+    }, 1500);
   });
 }
 

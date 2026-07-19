@@ -11,6 +11,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
   <link rel="stylesheet" href="style.css" />
+  <!-- Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
 
   <!-- Firebase SDK (Google CDN — same trust boundary as Gemini) -->
   <script type="module">
@@ -54,11 +56,41 @@
   </header>
 
   <!-- ══════════════════════════════════════════════════════════════════════════
+       SCREEN 0 — PERMISSIONS
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section id="screen-permissions" class="screen active" aria-labelledby="permissions-heading">
+    <div class="login-hero" style="margin-top: 10vh;">
+      <div class="login-icon" aria-hidden="true"><span class="material-symbols-outlined" style="font-size:inherit">security</span></div>
+      <h1 id="permissions-heading" class="login-title">App Permissions</h1>
+      <p class="login-desc">
+        To provide you with a seamless experience, Stadium Navigator needs access to:
+      </p>
+    </div>
+    <div class="card login-card" style="text-align: left; gap: 16px;">
+      <div style="display: flex; gap: 12px; align-items: flex-start;">
+        <span class="material-symbols-outlined" style="color: var(--blue); font-size: 1.5rem;">camera_alt</span>
+        <div>
+          <strong style="display: block; margin-bottom: 4px;">Camera</strong>
+          <span style="color: var(--text-secondary); font-size: 0.85rem;">Used to scan your physical ticket at the gate.</span>
+        </div>
+      </div>
+      <div style="display: flex; gap: 12px; align-items: flex-start;">
+        <span class="material-symbols-outlined" style="color: var(--blue); font-size: 1.5rem;">location_on</span>
+        <div>
+          <strong style="display: block; margin-bottom: 4px;">Location</strong>
+          <span style="color: var(--text-secondary); font-size: 0.85rem;">Used to provide accurate turn-by-turn wayfinding inside the stadium.</span>
+        </div>
+      </div>
+      <button id="btn-grant-permissions" class="btn btn-primary" style="margin-top: 12px;">Grant Permissions</button>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════════
        SCREEN 1 — LOGIN
   ══════════════════════════════════════════════════════════════════════════ -->
-  <section id="screen-login" class="screen active" aria-labelledby="login-heading">
+  <section id="screen-login" class="screen" aria-labelledby="login-heading">
     <div class="login-hero">
-      <div class="login-icon" aria-hidden="true">🏟️</div>
+      <div class="login-icon" aria-hidden="true"><span class="material-symbols-outlined" style="font-size:inherit">stadium</span></div>
       <h1 id="login-heading" class="login-title">Stadium Navigator</h1>
       <p class="login-desc">
         Your personal gate &amp; access assistant for the FIFA World Cup 2026 Final at MetLife Stadium.
@@ -98,7 +130,7 @@
     <!-- Ticket Scan UI -->
     <div class="card" role="form" aria-labelledby="ticket-heading">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px;">
-        <p id="ticket-heading" class="card-title mb-0" style="margin-bottom:0;"><span class="emoji" aria-hidden="true">🎟️</span><span data-i18n="your_ticket">Your Ticket</span></p>
+        <p id="ticket-heading" class="card-title mb-0" style="margin-bottom:0;"><span class="emoji" aria-hidden="true"><span class="material-symbols-outlined">local_activity</span></span><span data-i18n="your_ticket">Your Ticket</span></p>
         <select id="select-language" name="language" aria-label="Select your preferred language" style="width: auto; padding: 6px 24px 6px 10px; font-size: 0.85rem;">
           <option value="en">English</option>
           <option value="es">Español</option>
@@ -117,7 +149,7 @@
             <input type="checkbox" id="check-mobility" name="mobility" />
             <div class="checkbox-custom" aria-hidden="true"></div>
             <div class="checkbox-label">
-              <strong data-i18n="mobility_title">Mobility / Wheelchair ♿</strong>
+              <strong data-i18n="mobility_title">Mobility / Wheelchair <span class="material-symbols-outlined">accessible</span></strong>
               <span data-i18n="mobility_desc">Routes you to the nearest step-free ramp gate</span>
             </div>
           </label>
@@ -125,7 +157,7 @@
             <input type="checkbox" id="check-vision" name="vision" />
             <div class="checkbox-custom" aria-hidden="true"></div>
             <div class="checkbox-label">
-              <strong data-i18n="vision_title">Vision / Low Vision 👁</strong>
+              <strong data-i18n="vision_title">Vision / Low Vision <span class="material-symbols-outlined">visibility</span></strong>
               <span data-i18n="vision_desc">All updates spoken aloud via device audio</span>
             </div>
           </label>
@@ -133,7 +165,7 @@
             <input type="checkbox" id="check-hearing" name="hearing" />
             <div class="checkbox-custom" aria-hidden="true"></div>
             <div class="checkbox-label">
-              <strong data-i18n="hearing_title">Hearing / Deaf 🦻</strong>
+              <strong data-i18n="hearing_title">Hearing / Deaf <span class="material-symbols-outlined">hearing</span></strong>
               <span data-i18n="hearing_desc">Updates shown as large high-contrast banners</span>
             </div>
           </label>
@@ -141,7 +173,7 @@
       </div>
 
       <div id="scan-ui-idle" style="text-align: center; padding: 20px 0;">
-        <div style="font-size: 3rem; margin-bottom: 12px;">📱</div>
+        <div style="font-size: 3rem; margin-bottom: 12px;"><span class="material-symbols-outlined" style="font-size:inherit">qr_code_scanner</span></div>
         <p style="color: var(--text-secondary); margin-bottom: 20px;" data-i18n="scan_instruction">Ready to scan your ticket.</p>
         <button id="btn-demo" class="btn btn-primary" type="button" aria-label="Simulate scanning a ticket">
           Scan Ticket (Demo)
@@ -161,15 +193,15 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section id="screen-gate" class="screen" aria-labelledby="gate-heading">
     <div class="card" aria-labelledby="gate-heading">
-      <p id="gate-heading" class="card-title"><span class="emoji" aria-hidden="true">📍</span><span data-i18n="assigned_gate">Your Assigned Gate</span></p>
+      <p id="gate-heading" class="card-title"><span class="emoji" aria-hidden="true"><span class="material-symbols-outlined">location_on</span></span><span data-i18n="assigned_gate">Your Assigned Gate</span></p>
       
       <div class="gate-badge" style="margin-top:0" role="region" aria-labelledby="gate-name">
-        <div class="gate-icon" aria-hidden="true">🚪</div>
+        <div class="gate-icon" aria-hidden="true"><span class="material-symbols-outlined" style="font-size:inherit">door_open</span></div>
         <div>
           <div id="gate-name" class="gate-name"></div>
           <div id="gate-note" class="gate-note"></div>
           <div id="gate-override" class="gate-override hidden" aria-live="polite" data-i18n="rerouted">
-            ♿ Rerouted to step-free gate
+            <span class="material-symbols-outlined" style="font-size: 1.2rem; vertical-align: middle;">accessible</span> Rerouted to step-free gate
           </div>
         </div>
       </div>
@@ -202,16 +234,16 @@
 
     <!-- Accessibility banner (match updates delivered here) -->
     <div id="a11y-match-banner" class="a11y-banner ambient" role="alert" aria-live="assertive">
-      <span class="a11y-banner-icon" aria-hidden="true">📢</span>
+      <span class="a11y-banner-icon" aria-hidden="true"><span class="material-symbols-outlined" style="font-size:inherit">campaign</span></span>
       <span id="a11y-match-text"></span>
       <button id="btn-repeat-match" class="a11y-repeat-btn" aria-label="Repeat last update" style="display:none" data-i18n="repeat">Repeat</button>
     </div>
 
     <!-- Your gate info -->
     <div class="card" aria-labelledby="your-gate-heading">
-      <p id="your-gate-heading" class="card-title"><span class="emoji" aria-hidden="true">📍</span><span data-i18n="your_gate">Your Gate</span></p>
+      <p id="your-gate-heading" class="card-title"><span class="emoji" aria-hidden="true"><span class="material-symbols-outlined">location_on</span></span><span data-i18n="your_gate">Your Gate</span></p>
       <div id="match-gate-display" class="gate-badge" style="margin-top:0">
-        <div class="gate-icon" aria-hidden="true">🚪</div>
+        <div class="gate-icon" aria-hidden="true"><span class="material-symbols-outlined" style="font-size:inherit">door_open</span></div>
         <div>
           <div id="match-gate-name" class="gate-name"></div>
           <div id="match-gate-note" class="gate-note"></div>
@@ -221,7 +253,7 @@
 
     <!-- Live congestion -->
     <div class="card" aria-labelledby="congestion-heading">
-      <p id="congestion-heading" class="card-title"><span class="emoji" aria-hidden="true">📊</span><span data-i18n="live_congestion">Live Gate Congestion</span></p>
+      <p id="congestion-heading" class="card-title"><span class="emoji" aria-hidden="true"><span class="material-symbols-outlined">bar_chart</span></span><span data-i18n="live_congestion">Live Gate Congestion</span></p>
       <div class="congestion-grid" id="congestion-grid" role="list" aria-label="Gate congestion levels">
         <!-- Filled dynamically -->
       </div>
@@ -230,9 +262,14 @@
     <!-- Skip to full-time (for judging/testing) -->
     <div class="skip-btn-row">
       <button id="btn-skip-fulltime" class="btn btn-ghost" aria-label="Skip match to full time (demo only)" data-i18n="skip_fulltime">
-        ⏭ Skip to Full Time
+        <span class="material-symbols-outlined" style="vertical-align: middle;">skip_next</span> Skip to Full Time
       </button>
     </div>
+
+    <!-- Floating Help Button -->
+    <button id="btn-match-help" class="fab-help" aria-label="Request Assistance">
+      <span class="material-symbols-outlined">support_agent</span>
+    </button>
 
   </section>
 
@@ -241,28 +278,28 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section id="screen-exit" class="screen" aria-labelledby="exit-heading">
     <div class="exit-hero" role="banner">
-      <div style="font-size:2.4rem;margin-bottom:10px" aria-hidden="true">🏁</div>
+      <div style="font-size:2.4rem;margin-bottom:10px" aria-hidden="true"><span class="material-symbols-outlined" style="font-size:inherit">sports_score</span></div>
       <h2 id="exit-heading" data-i18n="full_time_title">Full Time!</h2>
       <p data-i18n="full_time_desc">The match is over. How can we help you get home?</p>
     </div>
 
     <!-- Accessibility banner for exit screen -->
     <div id="a11y-exit-banner" class="a11y-banner ambient" role="alert" aria-live="assertive">
-      <span class="a11y-banner-icon" aria-hidden="true">📢</span>
+      <span class="a11y-banner-icon" aria-hidden="true"><span class="material-symbols-outlined" style="font-size:inherit">campaign</span></span>
       <span id="a11y-exit-text"></span>
       <button id="btn-repeat-exit" class="a11y-repeat-btn" aria-label="Repeat last update" style="display:none" data-i18n="repeat">Repeat</button>
     </div>
 
     <div class="exit-choices" role="list">
       <button id="btn-need-help" class="exit-choice-btn" role="listitem" aria-label="I need assistance — connect me to stadium staff">
-        <span class="choice-icon" aria-hidden="true">🤝</span>
+        <span class="choice-icon" aria-hidden="true"><span class="material-symbols-outlined" style="font-size:inherit">handshake</span></span>
         <div>
           <div class="choice-title" data-i18n="need_help">Need Help?</div>
           <div class="choice-desc" data-i18n="need_help_desc">Connect with stadium staff for assistance</div>
         </div>
       </button>
       <button id="btn-give-directions" class="exit-choice-btn" role="listitem" aria-label="Give me exit directions using AI">
-        <span class="choice-icon" aria-hidden="true">🧭</span>
+        <span class="choice-icon" aria-hidden="true"><span class="material-symbols-outlined" style="font-size:inherit">explore</span></span>
         <div>
           <div class="choice-title" data-i18n="give_directions">Give Me Directions</div>
           <div class="choice-desc" data-i18n="give_directions_desc">AI-powered personalised exit route</div>
@@ -299,7 +336,7 @@
 
     <!-- Accessibility banner for result screen -->
     <div id="a11y-result-banner" class="a11y-banner ambient" role="alert" aria-live="assertive">
-      <span class="a11y-banner-icon" aria-hidden="true">📢</span>
+      <span class="a11y-banner-icon" aria-hidden="true"><span class="material-symbols-outlined" style="font-size:inherit">campaign</span></span>
       <span id="a11y-result-text"></span>
       <button id="btn-repeat-result" class="a11y-repeat-btn" aria-label="Repeat last update" style="display:none" data-i18n="repeat">Repeat</button>
     </div>
