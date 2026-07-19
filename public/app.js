@@ -57,6 +57,12 @@ let countdownInterval = null;
 // ═════════════════════════════════════════════════════════════════════════════
 async function boot() {
   await loadMockData();
+  
+  // Sync session with preserved dropdown state on reload
+  const langSelect = document.getElementById("select-language");
+  if (langSelect && langSelect.value) {
+    session.language = langSelect.value;
+  }
   updateUIForLanguage(session.language);
 
   // Wait for Firebase to expose auth
