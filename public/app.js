@@ -70,7 +70,7 @@ async function boot() {
 // ─── Load all mock JSON files ─────────────────────────────────────────────────
 async function loadMockData() {
   try {
-    const [seed, statuses, congestion] = await Promise.all([
+    const [seed, statuses, congestion, translations] = await Promise.all([
       fetch("data/stadium-seed.json").then(r => r.json()),
       fetch("data/match-status-mock.json").then(r => r.json()),
       fetch("data/congestion-mock.json").then(r => r.json()),
@@ -340,7 +340,8 @@ function congestionColor(pct) {
 // ═════════════════════════════════════════════════════════════════════════════
 function triggerExitScreen() {
   showScreen("exit");
-  const msg = "The match has ended. Please choose how you'd like to exit the stadium.";
+  const dict = uiTranslations[session.language] || uiTranslations["en"];
+  const msg = dict?.full_time_desc || "The match is over. How can we help you get home?";
   pushA11yUpdate(msg, "exit");
 }
 
