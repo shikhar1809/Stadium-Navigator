@@ -359,20 +359,30 @@ function showHelpConnect() {
   showResultLoading("loading_staff");
 
   setTimeout(() => {
-    const dict = uiTranslations[session.language] || uiTranslations["en"];
-    const escortNote = session.mobility
-      ? dict.staff_escort.replace("${gate}", session.gate.label)
-      : "";
-    const msg = dict.staff_success.replace("${gate}", session.gate.label).replace("${escort}", escortNote);
+    try {
+      const dict = uiTranslations[session.language] || uiTranslations["en"];
+      const gateLabel = session.gate ? session.gate.label : "your gate";
+      
+      const escortNote = session.mobility && dict.staff_escort
+        ? dict.staff_escort.replace("${gate}", gateLabel)
+        : "";
+        
+      const msg = dict.staff_success
+        ? dict.staff_success.replace("${gate}", gateLabel).replace("${escort}", escortNote)
+        : `Connected! Staff near ${gateLabel} have been notified.${escortNote}`;
 
-    showResultCard(
-      "🤝",
-      dict.staff_notified,
-      msg,
-      "help-card",
-      null
-    );
-    pushA11yUpdate(msg, "result");
+      showResultCard(
+        "🤝",
+        dict.staff_notified || "Staff Notified",
+        msg,
+        "help-card",
+        null
+      );
+      pushA11yUpdate(msg, "result");
+    } catch (err) {
+      console.error("Staff connect error:", err);
+      showResultCard("🤝", "Staff Notified", "Connected to staff.", "help-card", null);
+    }
   }, 2000);
 }
 
@@ -539,8 +549,8 @@ function showResultCard(icon, heading, message, cardClass, source) {
   $("result-heading").textContent = heading;
   $("result-message").textContent = message;
 
+  const src = $("result-source");
   if (source) {
-    const src = $("result-source");
     src.classList.remove("hidden", "fallback");
     if (source === "fallback") src.classList.add("fallback");
     const dict = uiTranslations[session.language] || uiTranslations["en"];
@@ -549,6 +559,8 @@ function showResultCard(icon, heading, message, cardClass, source) {
       : source === "fallback"
         ? dict.src_fallback
         : dict.src_staff;
+  } else {
+    src.classList.add("hidden");
   }
 
   card.classList.remove("hidden");
