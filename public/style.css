@@ -120,9 +120,9 @@ body {
   gap: 2px;
 }
 .top-logo {
-  height: 48px;
+  height: 120px;
   width: auto;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 }
 .app-logo {
   font-size: 1.3rem;
