@@ -164,6 +164,9 @@ function initAuth() {
   });
 
   $("btn-match-help")?.addEventListener("click", () => {
+    // Immediately stop any ongoing match commentary
+    if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+
     triggerHaptic("sos");
     showScreen("result");
     showResultLoading("loading_staff");
