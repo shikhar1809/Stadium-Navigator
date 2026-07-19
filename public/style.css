@@ -119,6 +119,11 @@ body {
   align-items: center;
   gap: 2px;
 }
+.top-logo {
+  height: 48px;
+  width: auto;
+  margin-bottom: 4px;
+}
 .app-logo {
   font-size: 1.3rem;
   font-weight: 700;
